@@ -1,7 +1,7 @@
-package fr.rader.yane.nbt.tags;
+package fr.rader.bane.nbt.tags;
 
-import fr.rader.yane.utils.DataReader;
-import fr.rader.yane.utils.DataWriter;
+import fr.rader.bane.utils.DataReader;
+import fr.rader.bane.utils.DataWriter;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

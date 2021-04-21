@@ -1,29 +1,29 @@
-package fr.rader.yane.nbt.tags;
+package fr.rader.bane.nbt.tags;
 
-import fr.rader.yane.utils.DataWriter;
+import fr.rader.bane.utils.DataWriter;
 
-public class TagInt extends TagBase {
+public class TagIntArray extends TagBase {
 
-    public static final byte TAG_ID = 3;
+    public static final byte TAG_ID = 11;
 
-    private int value;
+    private int[] value;
 
-    public TagInt(int value) {
+    public TagIntArray(int[] value) {
         setID(TAG_ID);
         setValue(value);
     }
 
-    public TagInt(String name, int value) {
+    public TagIntArray(String name, int[] value) {
         setID(TAG_ID);
         setName(name);
         setValue(value);
     }
 
-    public int getValue() {
+    public int[] getValue() {
         return this.value;
     }
 
-    public void setValue(int value) {
+    public void setValue(int[] value) {
         this.value = value;
     }
 
@@ -35,6 +35,7 @@ public class TagInt extends TagBase {
             writer.writeString(getName());
         }
 
-        writer.writeInt(value);
+        writer.writeInt(value.length);
+        writer.writeIntArray(value);
     }
 }

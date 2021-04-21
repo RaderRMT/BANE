@@ -1,7 +1,7 @@
-package fr.rader.yane;
+package fr.rader.bane;
 
-import fr.rader.yane.nbt.tags.*;
-import fr.rader.yane.utils.DataWriter;
+import fr.rader.bane.nbt.tags.*;
+import fr.rader.bane.utils.DataWriter;
 
 public class Main {
 
@@ -19,7 +19,7 @@ public class Main {
 
         // We create a DataWriter, so we can get the NBT as a byte array
         DataWriter writer = new DataWriter();
-        // we write the compount to the DataWriter
+        // we write the compound to the DataWriter
         compound.write(writer);
 
         // At this point, we can use DataWriter#getData() to get the NBT as a byte array

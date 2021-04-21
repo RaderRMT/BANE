@@ -1,4 +1,4 @@
-package fr.rader.yane.utils;
+package fr.rader.bane.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

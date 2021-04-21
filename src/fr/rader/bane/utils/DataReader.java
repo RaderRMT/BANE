@@ -1,6 +1,6 @@
-package fr.rader.yane.utils;
+package fr.rader.bane.utils;
 
-import fr.rader.yane.nbt.tags.TagCompound;
+import fr.rader.bane.nbt.tags.TagCompound;
 
 import java.io.*;
 import java.nio.ByteBuffer;

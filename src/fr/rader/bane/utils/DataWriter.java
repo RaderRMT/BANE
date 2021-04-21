@@ -1,4 +1,4 @@
-package fr.rader.yane.utils;
+package fr.rader.bane.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
