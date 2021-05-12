@@ -111,6 +111,8 @@ public class TagCompound extends TagBase {
     }
 
     public void remove(int index) {
+        validateIndex("remove(index)", index);
+
         tags.remove(index);
     }
 
@@ -119,12 +121,16 @@ public class TagCompound extends TagBase {
     }
 
     public void replace(int index, TagBase nbt) {
+        validateIndex("replace(index, nbt)", index);
+
         if(nbt.getName() == null) throw new IllegalArgumentException("NBT Tag must have a name");
 
         tags.set(index, nbt);
     }
 
     public TagBase get(int index) {
+        validateIndex("get(index)", index);
+
         return tags.get(index);
     }
 
@@ -138,5 +144,15 @@ public class TagCompound extends TagBase {
 
     public List<TagBase> getTags() {
         return tags;
+    }
+
+    private void validateIndex(String method, int index) {
+        if(this.tags.size() == 0) {
+            throw new IndexOutOfBoundsException("[TagCompound] -> [#" + method + "] cannot replace value in an empty list (index is " + index + ")");
+        }
+
+        if(index < 0 || index >= this.tags.size()) {
+            throw new IndexOutOfBoundsException("[TagCompound] -> [#" + method + "] index must be " + ((this.tags.size() == 1) ? "" : "between 0 and ") + (this.tags.size() - 1) + " (index is " + index + ")");
+        }
     }
 }
