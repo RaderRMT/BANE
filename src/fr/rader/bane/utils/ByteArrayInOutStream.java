@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream;
 
 public class ByteArrayInOutStream extends ByteArrayOutputStream {
 
-    protected ByteArrayInOutStream() {
+    public ByteArrayInOutStream() {
         super();
     }
 

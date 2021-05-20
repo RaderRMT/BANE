@@ -8,9 +8,9 @@ import java.nio.charset.StandardCharsets;
 
 public class DataWriter {
 
-    private ByteArrayInOutStream stream;
+    private final ByteArrayInOutStream stream;
+    private final byte[] buffer = new byte[16384];
 
-    private byte[] buffer = new byte[16384];
     private int index = 0;
 
     public DataWriter() {

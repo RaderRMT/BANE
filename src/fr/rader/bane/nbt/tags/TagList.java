@@ -152,6 +152,22 @@ public class TagList<T extends TagBase> extends TagBase {
         return tags.get(index);
     }
 
+    public boolean isEmpty() {
+        return tags.size() == 0;
+    }
+
+    /**
+     * Look if the list has something at the given index
+     * @return true if the list contains something at the given index, false otherwise
+     */
+    public boolean has(int index) {
+        return get(index) != null;
+    }
+
+    public int size() {
+        return tags.size();
+    }
+
     public List<T> getTags() {
         return tags;
     }
