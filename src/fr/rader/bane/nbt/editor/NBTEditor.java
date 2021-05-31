@@ -23,6 +23,8 @@ public class NBTEditor {
     private TagCompound serializedNBT;
     private TagCompound nbt;
 
+    private String pattern = "[{index}]: ";
+
     public NBTEditor() {
         //buildToolbar();
         buildGUI();
@@ -85,21 +87,31 @@ public class NBTEditor {
         tagTree = new JTree();
         scrollPane = new JScrollPane(tagTree);
 
-        panel.add(scrollPane);
+        panel.add(scrollPane, BorderLayout.CENTER);
     }
 
     private EditorCell buildTree(TagBase base) {
         // base must either be a list or a compound. if it's not, we throw a IllegalArgumentException
-        if(!(base instanceof TagCompound) && !(base instanceof TagList)) {
+        if(!(base instanceof TagCompound)
+                && !(base instanceof TagList)) {
             throw new IllegalArgumentException("Tag must either be TagCompound or TagList. Got " + base.getClass().getSimpleName() + " instead");
         }
 
         EditorCell out = getEditorCell(base);
 
+        if(out == null) {
+            throw new IllegalStateException("[NBTEditor] -> [#buildTree(base)] out is null; base is " + base.getClass().getSimpleName());
+        }
+
         List<TagBase> bases = getChildrenTags(base);
         for(TagBase tag : bases) {
-            if(tag.getTagID() == 9 || tag.getTagID() == 10) {
+            if(tag.getTagID() == TagList.TAG_ID
+                    || tag.getTagID() == TagCompound.TAG_ID) {
                 out.add(buildTree(tag));
+            } else if(tag.getTagID() == TagByteArray.TAG_ID
+                    || tag.getTagID() == TagIntArray.TAG_ID
+                    || tag.getTagID() == TagLongArray.TAG_ID) {
+                out.add(buildArray(tag));
             } else {
                 out.add(new TagCell(tag));
             }
@@ -109,8 +121,36 @@ public class NBTEditor {
     }
 
     private EditorCell buildArray(TagBase base) {
-        // todo
-        return null;
+        if(!(base instanceof TagByteArray)
+                && !(base instanceof TagIntArray)
+                && !(base instanceof TagLongArray)) {
+            throw new IllegalArgumentException("Tag must either be TagByteArray, TagIntArray or TagLongArray. Got " + base.getClass().getSimpleName() + " instead");
+        }
+
+        EditorCell out = getEditorCell(base);
+
+        if(base instanceof TagByteArray) {
+            TagByteArray byteArray = base.getAsTagByteArray();
+            for(int i = 0; i < byteArray.size(); i++) {
+                out.add(new ArrayValueCell("byte", pattern.replaceAll("\\{index}", Integer.toUnsignedString(i)) + byteArray.get(i)));
+            }
+        }
+
+        if(base instanceof TagIntArray) {
+            TagIntArray intArray = base.getAsTagIntArray();
+            for(int i = 0; i < intArray.size(); i++) {
+                out.add(new ArrayValueCell("int", pattern.replaceAll("\\{index}", Integer.toUnsignedString(i)) + intArray.get(i)));
+            }
+        }
+
+        if(base instanceof TagLongArray) {
+            TagLongArray longArray = base.getAsTagLongArray();
+            for (int i = 0; i < longArray.size(); i++) {
+                out.add(new ArrayValueCell("long", pattern.replaceAll("\\{index}", Integer.toUnsignedString(i)) + longArray.get(i)));
+            }
+        }
+
+        return out;
     }
 
     private List<TagBase> getChildrenTags(TagBase tag) {
@@ -122,11 +162,27 @@ public class NBTEditor {
     }
 
     private EditorCell getEditorCell(TagBase tag) {
-        if(tag instanceof TagCompound) {
-            return new CompoundCell(tag.getName() + ": " + tag.getAsTagCompound().getTags().size() + " entries");
+        String name = tag.getName();
+        if(name == null) {
+            name = "";
+        } else {
+            name += ": ";
         }
 
-        return new ListCell(tag.getName() + ": " + tag.getAsUnknownList().getTags().size() + " entries");
+        switch(tag.getTagID()) {
+            case TagCompound.TAG_ID:
+                return new CompoundCell(name + tag.getAsTagCompound().getTags().size() + " entries");
+            case TagList.TAG_ID:
+                return new ListCell(name + tag.getAsUnknownList().getTags().size() + " entries");
+            case TagByteArray.TAG_ID:
+                return new ArrayCell(name + tag.getAsTagByteArray().size() + " bytes", "byte");
+            case TagIntArray.TAG_ID:
+                return new ArrayCell(name + tag.getAsTagIntArray().size() + " integers", "int");
+            case TagLongArray.TAG_ID:
+                return new ArrayCell(name + tag.getAsTagLongArray().size() + " long integers", "long");
+        }
+
+        return null;
     }
 
     private void addButtons(JToolBar toolbar) {

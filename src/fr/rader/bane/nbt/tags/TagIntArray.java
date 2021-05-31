@@ -30,6 +30,10 @@ public class TagIntArray extends TagBase {
         setValue(value);
     }
 
+    public int size() {
+        return value.size();
+    }
+
     public int[] getValue() {
         int[] out = new int[value.size()];
 

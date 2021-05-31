@@ -2,8 +2,11 @@ package fr.rader.bane;
 
 import fr.rader.bane.nbt.editor.NBTEditor;
 import fr.rader.bane.nbt.tags.*;
+import fr.rader.bane.utils.DataReader;
 import fr.rader.bane.utils.DataWriter;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Main {
@@ -12,8 +15,11 @@ public class Main {
         // todo:
         //  create a nbt reader & writer, to handle writing and reading files easier
 
+        // todo: this one is important:
+        //  allow the user to show numbers in decimal, octal, hexadecimal and binary, signed and unsigned
+
         // We create a List of bytes, and add 3 bytes
-        /*TagList<TagByte> bytes = new TagList<>(TagByte.class, "bytes_list");
+        TagList<TagByte> bytes = new TagList<>(TagByte.class, "bytes_list");
         bytes.add(new TagByte(1));
         bytes.add(new TagByte(2));
         bytes.add(new TagByte(3));
@@ -25,7 +31,7 @@ public class Main {
 
         TagByteArray test = new TagByteArray("test", new byte[] { 1, 2, 3, 4, 5 });
 
-        compound.add(test);*/
+        compound.add(test);
 
         // We create a DataWriter, so we can get the NBT as a byte array
         /*DataWriter writer = new DataWriter();
@@ -41,9 +47,24 @@ public class Main {
         // We should not forget to close the writer's stream
         writer.close();*/
 
-        /*NBTEditor editor = new NBTEditor();
+        /*File file = new File("C:/Users/Rader/Desktop/test.nbt");
+
+        TagCompound fileCompound = null;
+        DataReader reader = new DataReader(file);
+        try {
+            fileCompound = reader.readNBT();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        reader.close();
+
+        if(fileCompound == null) {
+            return;
+        }*/
+
+        NBTEditor editor = new NBTEditor();
         editor.loadNBT(compound);
-        editor.invokeEditor();*/
+        editor.invokeEditor();
 
         /*TagByteArray test = new TagByteArray("test");
         test.setValue(null);

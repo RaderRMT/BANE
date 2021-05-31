@@ -30,6 +30,10 @@ public class TagByteArray extends TagBase {
         setValue(value);
     }
 
+    public int size() {
+        return value.size();
+    }
+
     public byte[] getValue() {
         byte[] out = new byte[value.size()];
 

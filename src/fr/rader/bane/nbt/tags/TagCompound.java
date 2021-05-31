@@ -42,7 +42,9 @@ public class TagCompound extends TagBase {
     private void readCompound(DataReader reader) throws IOException {
         while(true) {
             int tagID = reader.readByte();
-            if(tagID == 0) return;
+            if(tagID == 0) {
+                return;
+            }
 
             String tagName = reader.readString(reader.readShort());
 
@@ -105,7 +107,13 @@ public class TagCompound extends TagBase {
     }
 
     public void add(TagBase nbt) {
-        if(nbt.getName() == null) throw new IllegalArgumentException("NBT Tag must have a name");
+        if(nbt.getName() == null) {
+            throw new IllegalArgumentException("NBT Tag must have a name");
+        }
+
+        if(has(nbt.getName())) {
+            throw new IllegalArgumentException("Duplicate NBT Tag name: " + nbt.getName());
+        }
 
         tags.add(nbt);
     }
@@ -123,7 +131,9 @@ public class TagCompound extends TagBase {
     public void replace(int index, TagBase nbt) {
         validateIndex("replace(index, nbt)", index);
 
-        if(nbt.getName() == null) throw new IllegalArgumentException("NBT Tag must have a name");
+        if(nbt.getName() == null) {
+            throw new IllegalArgumentException("NBT Tag must have a name");
+        }
 
         tags.set(index, nbt);
     }
@@ -136,7 +146,9 @@ public class TagCompound extends TagBase {
 
     public TagBase get(String name) {
         for(TagBase tag : tags) {
-            if(tag.getName().equals(name)) return tag;
+            if(tag.getName().equals(name)) {
+                return tag;
+            }
         }
 
         return null;

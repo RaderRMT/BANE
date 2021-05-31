@@ -10,6 +10,11 @@ public abstract class TagBase {
     private String name;
     private byte tagID;
 
+    // todo:
+    //  either make this return a byte[], and add them together in a datawriter,
+    //  or keep it as it is. if we go with the first route, we could move the datawriter class to the io package,
+    //   then make the datawriter package private,
+    //   and have a IO class managing reading/writing nbt files (the utils package might have to move to the io package)
     public abstract void write(DataWriter writer);
 
     public void setID(byte id) {

@@ -122,8 +122,13 @@ public class TagList<T extends TagBase> extends TagBase {
     }
 
     public void add(T nbt) {
-        if(nbt.getName() != null) throw new IllegalArgumentException("NBT Tag must not have a name");
-        if(nbt.getTagID() != childrenID) throw new IllegalArgumentException("NBT Tag id must be " + childrenID + " (it is " + nbt.getTagID() + " (" + nbt.getClass().getSimpleName() + ") instead)");
+        if(nbt.getName() != null) {
+            throw new IllegalArgumentException("NBT Tag must not have a name");
+        }
+
+        if(nbt.getTagID() != childrenID) {
+            throw new IllegalArgumentException("NBT Tag id must be " + childrenID + " (it is " + nbt.getTagID() + " (" + nbt.getClass().getSimpleName() + ") instead)");
+        }
 
         tags.add(nbt);
     }
@@ -139,9 +144,11 @@ public class TagList<T extends TagBase> extends TagBase {
     }
 
     public void replace(int index, T nbt) {
-        validateIndex("replace(index, nbt)", index);
+        if(nbt.getName() != null) {
+            throw new IllegalArgumentException("NBT Tag must not have a name");
+        }
 
-        if(nbt.getName() != null) throw new IllegalArgumentException("NBT Tag must not have a name");
+        validateIndex("replace(index, nbt)", index);
 
         tags.set(index, nbt);
     }

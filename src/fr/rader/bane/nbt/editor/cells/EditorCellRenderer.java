@@ -28,7 +28,7 @@ public class EditorCellRenderer extends DefaultTreeCellRenderer {
             }
 
             setIcon(new ImageIcon(imageURL));
-            setText(cell.getCellName());
+            setText("<html>" + cell.getCellName() + "</html>");
         }
 
         return this;

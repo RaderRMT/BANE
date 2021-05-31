@@ -50,7 +50,7 @@ public class TagCell extends EditorCell {
                 this.setCellName(getCellName() + associatedTag.getAsString());
                 break;
             default:
-                System.out.println("[TagCell] -> (#defineName) Unknown tag ID: " + tagID);
+                System.out.println("[TagCell] -> [#defineName()] Unknown tag ID: " + tagID);
         }
     }
 
